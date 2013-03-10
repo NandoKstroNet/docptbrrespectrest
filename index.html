@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css" />
+	<title>::Respect/Rest - Português/Brasil::</title>
+	<meta name="title" content="::Respect/Rest - Português/Brasil:: - Documentação PT/BR" />
+	<meta name="description" content="Documentação do Respect/Rest em português" />
+	<meta name="keywords" content="respect/rest, respect/rest pt, tradução pt respect/rest, documentação respect/rest" />
+	<meta name="author" content="Tradução por: Nanderson Castro" />   
+	<meta name="url" content="http://cssexperts.net/traducao-respect-rest/" />  
+	<meta name="robots" content="INDEX,FOLLOW" />
+</head>
+<body>
+	<div id="content">
+		<h1><img src="respect.png" alt="Respect/Rest" />Respect/Rest</h1>
+		<p>Thin controller for Restful applications and APIs.</p>
+		<ul>
+			<li>Very thin and lightweight</li>
+			<li>Don't try changes PHP, small learning curve</li>
+			<li>Completely RESTful, the right way to build apps.</li>
+		</ul>
+		
+		<h1>Instalação</h1>
+		<p>Packages podem ser encontrados no
+		<a href="http://respect.li/pear" title="Respect/Rest PEAR">PEAR</a> and <a href="http://packagist.org/packages/Respect/Rest" title="Respect/Rest Composer">Composer</a>.
+		Autoloading compativél com <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.
+		</p>
+		<h1>Configuração</h1>
+		<p>Bootstrap é bem simples, basta criar uma instância de Respect\Rest\Router</p>
+
+			<h5>
+				use Respect\Rest\Router;<br />
+				$r3 = new Router;
+			</h5>
+
+		<p>
+		Pressupomos que você tenha um .htaccess que redireciona para este arquivo
+		PHP e que esteja executando-o a partir da raiz do dominio.
+		(http://example.com/) Sem qualquer subpasta.
+		</p>
+		<p>Se você deseja utiliza-lo a partir de uma subpasta, basta passar a caminho
+		para o router:</p>
+		<h5>
+					$r3 = new Router('/myapp');
+		</h5>
+		<p>Com isto o roteador irá trabalhar a partir de: http://example.com/myapp/</p>
+		<p>Você também pode utilizar o Router sem utilização de um aquivo .htaccess, desta maneira você usará variável CGI PATH_INFO, 
+		você pode declara-lo da seguinte maneira:</p>
+		<h5>
+					$r3 = new Router('/index.php/');
+		</h5>
+		<p>Ista presupões que as URLs no projeto iniciarão com esses namespaces.</p>
+		<h1>Dispatching|Executando</h1>
+		<p>O router é auto-executado, você não precisa realizar nenhuma ação para que o mesmo execute de fato, a não ser definir as rotas.
+		Mas caso queira omitir tal comportamento proceda da seguinte maneira:</p>
+		<h5>
+			$r3->isAutoDispatched = false;
+		</h5>
+		<p>Note que para ver as excessões é preciso seguir o próximo passo.</p>
+		<h5>
+			print $r3->run();
+		</h5>
+		<p>Você pode imprimir a saída ou armazena-la em uma variável, se assim desejar. Isso permite um melhor teste e a integração do Router
+		com sua app existente.</p>
+		<h1>Roteamento Simples</h1>
+		<p>Um "Olá Mundo" ficaria assim:</p>
+		<h5>
+			$r3->get('/', function() { <br/>
+     		   return 'Hello World'; <br/>
+   			 });
+
+		</h5>
+		<p>Ao acessar http://localhost (Considere sua configuração local para isto) a saída em seu browser será "Hello World". Você pode declarar como rotas o que você desejar:</p>
+		<h5>
+			 $r3->get('/hello', function() {<br/>
+      				  return 'Hello from Path';<br/>
+   			 });
+
+		</h5>
+		<p>Neste caso, ao acessar http://localhost/hello a saída em seu browser será "Hello from Path".</p>
+		<h1>Usando parametros</h1>
+		<p>Você pode declarar rotas que recebam parâmetros da URL.Para isso cada parâmetro é um /* no caminho da rota. Considerando o exemplo anterior:</p>
+		<h5>
+			$r3->get('/users/*', function($screenName) {<br/>
+        		echo "User {$screenName}";<br/>
+  		  });
+		</h5>
+	</div><!--Fecha Div Content-->
+</body>
+</html>
