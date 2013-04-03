@@ -9,10 +9,25 @@ html{
 	font-size: 16px;
 	
 }
-
+small {
+	color:#f00;
+}
+.social {
+	width: 100%;
+	padding: 10px;
+	position: fixed;
+	top: 0;
+	margin-bottom: 15px;
+	background: #fff;
+	box-shadow: 0px 0px 5px #000;
+}
+.social div {
+	float: left;
+	margin: 0 5px;
+}
 #content{
 	width: 67.5%;
-	margin: 0 auto;
+	margin: 60px auto 0;
 	
 }
 #content h1, h5, p {
@@ -24,6 +39,10 @@ html{
 	margin: 1.0416% 1.0416% 1.0416% 0;
 	font-size: 2em;
 
+}
+#content ul {
+	text-align: left;
+	margin-left:  35px;
 }
 #content img{
 	width: 100px;
@@ -40,6 +59,14 @@ html{
 #content p{
 	font-size: 1.125em;
 	margin: 3.208% 0;
-	line-height: 25px;
+	line-height: 35px;
 	
+}
+#content strong {
+	box-shadow: 1px 1px 5px #000;
+	color: #069;
+	padding: 1px;
+	margin: 5px;
+	border-radius: 5px;
+	font-weight: normal;
 }
