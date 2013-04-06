@@ -50,7 +50,7 @@
             </ul>
             <h2>Instalação</h2>
             <p>Packages podem ser encontrados no
-                <a href="http://respect.li/pear" title="Respect/Rest PEAR">PEAR</a> and <a href="http://packagist.org/packages/Respect/Rest" title="Respect/Rest Composer">Composer</a>.
+                <a href="http://respect.li/pear" title="Respect/Rest PEAR">PEAR</a> e <a href="http://packagist.org/packages/Respect/Rest" title="Respect/Rest Composer">Composer</a>.
     			Autoloading compativél com <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.
             </p>
             <h2>Configuração</h2>
@@ -59,7 +59,7 @@
 use <span class="namespace">Respect\Rest\Router</span>;
 $r3 = new Router;
 </pre>
-            <p>Pressupomos que você tenha um .htaccess que redireciona para este arquivo PHP e que esteja executando-o a partir da raiz do dominio. (http://example.com/) Sem qualquer subpasta.</p>
+            <p>Pressupomos que você tenha um .htaccess que redireciona para este arquivo PHP e que esteja executando-o a partir da raiz do dominio (http://example.com/ sem qualquer subpasta).</p>
     		<p>Se você deseja utiliza-lo a partir de uma subpasta, basta passar a caminho para o router:</p>
 <pre class="prettyprint">
 $r3 = new Router('/myapp');
@@ -69,7 +69,7 @@ $r3 = new Router('/myapp');
 <pre class="prettyprint">
 $r3 = new Router('/index.php/');
 </pre>
-    		<p>Ista presupões que as URLs no projeto iniciarão com esses namespaces.</p>
+    		<p>Isto presupões que as URLs no projeto iniciarão com esses namespaces.</p>
     		<h2>Dispatching | Executando</h2>
     		<p>O router é auto-executado, você não precisa realizar nenhuma ação para que o mesmo execute de fato, a não ser definir as rotas. Mas caso queira omitir tal comportamento proceda da seguinte maneira:</p>
 <pre class="prettyprint">
