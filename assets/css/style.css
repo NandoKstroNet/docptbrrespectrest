@@ -191,3 +191,8 @@ h2 {
     width: 90px;
     float: left;
 }
+
+/* Fix namespace syntax highlight */
+.namespace .pln{
+    color: #98fb98;
+}
