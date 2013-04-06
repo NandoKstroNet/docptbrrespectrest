@@ -2,10 +2,11 @@
 <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
+        <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="assets/css/style.css">
-        <title>::Respect/Rest - Português/Brasil::</title>
-        <meta name="title" content="::Respect/Rest - Português/Brasil:: - Documentação PT/BR" />
+        <title>Respect/Rest - Português/Brasil</title>
+        <meta name="title" content="Respect/Rest - Português/Brasil - Documentação PT/BR" />
         <meta name="description" content="Documentação do Respect/Rest em português" />
         <meta name="keywords" content="respect/rest, respect/rest pt, tradução pt respect/rest, documentação respect/rest" />
         <meta name="author" content="Tradução por: Nanderson Castro" />   
@@ -32,8 +33,13 @@
                 </div>
             </div>
             <div class="logo">
-                <img src="assets/img/respect.png" alt="Respect/Rest" width="100px"/>
-                <h1>Respect Project</h1>
+                <a href="http://respect.li">
+                    <img src="assets/img/respect.png" alt="Respect/Rest" width="140px"/>
+                </a>
+                <hgroup>
+                   <h1>Respect Project</h1>
+                   <h2>Respect/Rest</h2>
+                </hgroup>
             </div>            
     	</header>	
         <div id="content">
@@ -65,7 +71,7 @@ $r3 = new Router;
 $r3 = new Router('/myapp');
 </pre>
     		<p>Com isto o roteador irá trabalhar a partir de: http://example.com/myapp/</p>
-    		<p>Você também pode utilizar o Router sem utilização de um aquivo .htaccess, desta maneira você usará variável CGI PATH_INFO, você pode declara-lo da seguinte maneira:</p>
+    		<p>Você também pode utilizar o Router sem utilização de um aquivo .htaccess, desta maneira você usará variável CGI <strong>PATH_INFO</strong>, você pode declara-lo da seguinte maneira:</p>
 <pre class="prettyprint">
 $r3 = new Router('/index.php/');
 </pre>

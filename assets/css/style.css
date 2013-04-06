@@ -139,6 +139,13 @@ h2 {
     border: 1px solid #e4efe1;
 }
 
+.progress{
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    margin: 10px 0;
+}
+
 .logo img{
     float: left;
 }
@@ -147,11 +154,9 @@ h2 {
     vertical-align: middle;
 }
 
-.progress{
-    width: 100%;
-    padding: 10px 0;
-    text-align: center;
-    margin: 10px 0;
+.logo h2{
+    font-size: 3em;
+    margin-top: 0.2em;
 }
 
 #content{
