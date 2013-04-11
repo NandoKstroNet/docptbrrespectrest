@@ -1,153 +1,176 @@
 <!DOCTYPE HTML>
 <html lang="pt-BR">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="style.css" />
-	<title>::Respect/Rest - Português/Brasil::</title>
-	<meta name="title" content="::Respect/Rest - Português/Brasil:: - Documentação PT/BR" />
-	<meta name="description" content="Documentação do Respect/Rest em português" />
-	<meta name="keywords" content="respect/rest, respect/rest pt, tradução pt respect/rest, documentação respect/rest" />
-	<meta name="author" content="Tradução por: Nanderson Castro" />   
-	<meta name="url" content="http://cssexperts.net/traducao-respect-rest/" />  
-	<meta name="robots" content="INDEX,FOLLOW" />
-</head>
-<body>
-	<a href="https://github.com/NandoKstroNet/docptbrrespectrest"><img style="z-index: 999; position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<div class="social">
-	<div>
-	<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=397727050278644";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-		<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
-	</div><!--Fecha Div Facebook-->
-	<div>
-	<a href="https://github.com/NandoKstroNet/docptbrrespectrest" title="GitHub">
-		<img src="https://github.com/favicon.ico" alt="GitHub" title="GitHub" />
-	</a>
-	</div>
-</div>
-	<div id="content">
-		<h1><img src="respect.png" alt="Respect/Rest" />Respect/Rest</h1>
-			<small>Em progresso...</small>
-		<p>Controlador elegante para aplicações Restful e criação de APIs.</p>
-		<ul>
-			<li>Muito leve e elegante</li>
-			<li>Não faz mudanças em seu PHP, pequena curva de aprendizado.</li>
-			<li>Completamente RestFul, caminho certo para construir aplicações.</li>
-		</ul>
-		
-		<h1>Instalação</h1>
-		<p>Packages podem ser encontrados no
-		<a href="http://respect.li/pear" title="Respect/Rest PEAR">PEAR</a> and <a href="http://packagist.org/packages/Respect/Rest" title="Respect/Rest Composer">Composer</a>.
-		Autoloading compativél com <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.
-		</p>
-		<h1>Configuração</h1>
-		<p>Bootstrap é bem simples, basta criar uma instância de Respect\Rest\Router</p>
-
-			<h5>
-				use Respect\Rest\Router;<br />
-				$r3 = new Router;
-			</h5>
-
-		<p>
-		Pressupomos que você tenha um .htaccess que redireciona para este arquivo
-		PHP e que esteja executando-o a partir da raiz do dominio.
-		(http://example.com/) Sem qualquer subpasta.
-		</p>
-		<p>Se você deseja utiliza-lo a partir de uma subpasta, basta passar a caminho
-		para o router:</p>
-		<h5>
-					$r3 = new Router('/myapp');
-		</h5>
-		<p>Com isto o roteador irá trabalhar a partir de: http://example.com/myapp/</p>
-		<p>Você também pode utilizar o Router sem utilização de um aquivo .htaccess, desta maneira você usará variável CGI PATH_INFO, 
-		você pode declara-lo da seguinte maneira:</p>
-		<h5>
-					$r3 = new Router('/index.php/');
-		</h5>
-		<p>Ista presupões que as URLs no projeto iniciarão com esses namespaces.</p>
-		<h1>Dispatching|Executando</h1>
-		<p>O router é auto-executado, você não precisa realizar nenhuma ação para que o mesmo execute de fato, a não ser definir as rotas.
-		Mas caso queira omitir tal comportamento proceda da seguinte maneira:</p>
-		<h5>
-			$r3->isAutoDispatched = false;
-		</h5>
-		<p>Note que para ver as excessões é preciso seguir o próximo passo.</p>
-		<h5>
-			print $r3->run();
-		</h5>
-		<p>Você pode imprimir a saída ou armazena-la em uma variável, se assim desejar. Isso permite um melhor teste e a integração do Router
-		com sua app existente.</p>
-		<h1>Roteamento Simples</h1>
-		<p>Um "Olá Mundo" ficaria assim:</p>
-		<h5>
-			$r3->get('/', function() { <br/>
-     		   return 'Hello World'; <br/>
-   			 });
-
-		</h5>
-		<p>Ao acessar http://localhost (Considere sua configuração local para isto) a saída em seu browser será "Hello World". Você pode declarar como rotas o que você desejar:</p>
-		<h5>
-			 $r3->get('/hello', function() {<br/>
-      				  return 'Hello from Path';<br/>
-   			 });
-
-		</h5>
-		<p>Neste caso, ao acessar http://localhost/hello a saída em seu browser será "Hello from Path".</p>
-		<h1>Usando parametros</h1>
-		<p>Você pode declarar rotas que recebam parâmetros da URL.Para isso cada parâmetro é um /* no caminho da rota. Considerando o exemplo anterior:</p>
-		<h5>
-			$r3->get('/users/*', function($screenName) {<br/>
-        		echo "User {$screenName}";<br/>
-  		  });
-		</h5>
-		<p>
-			Acessando http://localhost/users/alganet ou qualquer outro nome de usuário, além do Alganet, o resultado será
-			"User alganet"(ou o nome escolhido por você.).<br />
-			Multiplos parâmetros podem ser definidos:
-		</p>
-		<h5>
-			    $r3->get('/users/*/lists/*', function($user, $list) {<br />
-        			return "List {$list} from user {$user}.";<br />
-			    });<br />
-
-		</h5>
-		<p>
-			Os últimos parâmetros na rota são opcionais por default, basta declarar apenas um <strong>->get('/posts/*')</strong> que irá corresponder a <strong>http://localhost/posts/ </strong> sem nenhum parâmetro. Você pode declarar um segundo <strong>->get('/posts')</strong>, agora o Router irá corresponder corretamente, ou tratar o parâmetro ausente, tornando-os anulavéis na função passada.
-		</p>
-		<h5>
-			    $r3->get('/posts/*/*/*', function($year,$month=null,$day=null) {<br />
-        			/** list posts, month and day are optional */<br />
-    			});<br />
-		</h5>
-		<p>
-			1. O código acima irá corresponder a <strong>/posts/2010/10/10</strong>, <strong>/posts/2011/01 </strong> e <strong>/posts/2010</strong>. <br />
-			2. Os parametros opcionais são aceitos apenas ao fim do path. A seguinte forma não aceita parametro opcional:
-			<strong>/posts/*/*/*/comments/* </strong>.
-		</p>
-		<h1>Parâmetro Catch-All | Pegando diversos parâmetros</h1>
-		<p>
-			Existem casos em que você precisa pegar um número indefinido de parâmetros. Você pode usar o Route com o parametro catch-all, veja:
-		</p>
-		<h5>
-			    $r3->get('/users/*/documents/**', function($user, $documentPath) {<br />
-      				  return readfile(PATH_STORAGE. implode('/', $documentPath));<br />
-   				 });
-
-		</h5>
-		<p>
-			1. O exemplo citado acima corresponde a <strong>/users/alganet/documents/foo/bar/baz/anything</strong>. Como retorno o parâmetro $user receberá alganet e $documentPath receberá um array com o seguinte conteúdo [foo,bar,baz,anything]. <br />
-			2. Os parâmetros catch-all são definidos por dois astericos: <strong>/**</strong>. <br />
-			3. Parametros catch-all devem aparecer apenas no fim do path. Os asteriscos duplos em outras posições serão sempre convertidos para asteriscos simples. <br />
-			4. Catch-all parameters will match after any other route that matches the same pattern.
-		</p>
-		<small>Continua...</small>
-	</div><!--Fecha Div Content-->
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <title>Respect/Rest - Português/Brasil</title>
+        <meta name="title" content="Respect/Rest - Português/Brasil - Documentação PT/BR" />
+        <meta name="description" content="Documentação do Respect/Rest em português" />
+        <meta name="keywords" content="respect/rest, respect/rest pt, tradução pt respect/rest, documentação respect/rest" />
+        <meta name="author" content="Tradução por: Nanderson Castro" />   
+        <meta name="url" content="http://cssexperts.net/traducao-respect-rest/" />  
+        <meta name="robots" content="INDEX,FOLLOW" />
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
+    </head>
+    <body>
+        <header>               
+            <div class="social">
+                <div class="facebook">
+                    <div id="fb-root"></div>
+                    <script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=397727050278644";fjs.parentNode.insertBefore(js,fjs)})(document,"script","facebook-jssdk");</script>
+                    <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+                </div>
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="NandoKstroNet" data-lang="pt" data-hashtags="respectrest">Tweetar</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div>
+                <div class="github">
+                    <iframe src="http://ghbtns.com/github-btn.html?user=NandoKstroNet&repo=docptbrrespectrest&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
+                    <iframe src="http://ghbtns.com/github-btn.html?user=NandoKstroNet&repo=docptbrrespectrest&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+                    <a href="https://github.com/NandoKstroNet/docptbrrespectrest"><img style="z-index: 999; position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+                </div>
+            </div>
+            <div class="logo">
+                <a href="http://respect.li">
+                    <img src="assets/img/respect.png" alt="Respect/Rest" width="140px"/>
+                </a>
+                <hgroup>
+                   <h1>Respect Project</h1>
+                   <h2>Respect/Rest</h2>
+                </hgroup>
+            </div>            
+    	</header>	
+        <div id="content">
+            <div class="progress">
+                <div class="load">  
+                    Em progresso...                   
+                </div>
+            </div>
+            <p>
+                Controlador elegante para aplicações Restful e criação de APIs.
+            </p>
+            <ul>
+                <li>Muito leve e elegante</li>
+                <li>Não faz mudanças em seu PHP, pequena curva de aprendizado.</li>
+                <li>Completamente RestFul, caminho certo para construir aplicações.</li>
+            </ul>
+            <h2>Instalação</h2>
+            <p>Packages podem ser encontrados no
+                <a href="http://respect.li/pear" title="Respect/Rest PEAR">PEAR</a> e <a href="http://packagist.org/packages/Respect/Rest" title="Respect/Rest Composer">Composer</a>.
+    			Autoloading compativél com <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.
+            </p>
+            <h2>Configuração</h2>
+            <p>Bootstrap é bem simples, basta criar uma instância de Respect\Rest\Router</p>
+<pre class="prettyprint">
+use <span class="namespace">Respect\Rest\Router</span>;
+$r3 = new Router;
+</pre>
+            <p>Pressupomos que você tenha um .htaccess que redireciona para este arquivo PHP e que esteja executando-o a partir da raiz do dominio (http://example.com/ sem qualquer subpasta).</p>
+    		<p>Se você deseja utiliza-lo a partir de uma subpasta, basta passar a caminho para o router:</p>
+<pre class="prettyprint">
+$r3 = new Router('/myapp');
+</pre>
+    		<p>Com isto o roteador irá trabalhar a partir de: http://example.com/myapp/</p>
+    		<p>Você também pode utilizar o Router sem utilização de um aquivo .htaccess, desta maneira você usará variável CGI <strong>PATH_INFO</strong>, você pode declara-lo da seguinte maneira:</p>
+<pre class="prettyprint">
+$r3 = new Router('/index.php/');
+</pre>
+    		<p>Isto presupões que as URLs no projeto iniciarão com esses namespaces.</p>
+    		<h2>Dispatching | Executando</h2>
+    		<p>O router é auto-executado, você não precisa realizar nenhuma ação para que o mesmo execute de fato, a não ser definir as rotas. Mas caso queira omitir tal comportamento proceda da seguinte maneira:</p>
+<pre class="prettyprint">
+$r3->isAutoDispatched = false;
+</pre>
+            <p>Note que para ver as excessões é preciso seguir o próximo passo.</p>
+<pre class="prettyprint">
+print $r3->run();
+</pre>
+    		<p>Você pode imprimir a saída ou armazena-la em uma variável, se assim desejar. Isso permite um melhor teste e a integração do Router com sua app existente.</p>
+            <h2>Roteamento Simples</h2>
+            <p>Um "Olá Mundo" ficaria assim:</p>
+<pre class="prettyprint">
+$r3->get('/', function() {
+	return 'Hello World';
+});
+</pre>
+            <p>Ao acessar http://localhost (Considere sua configuração local para isto) a saída em seu browser será "Hello World". Você pode declarar como rotas o que você desejar:</p>
+<pre class="prettyprint">
+$r3->get('/hello', function() {
+	return 'Hello from Path';
+});
+</pre>
+            <p>Neste caso, ao acessar http://localhost/hello a saída em seu browser será "Hello from Path".</p>
+            <h2>Usando parametros</h2>
+            <p>Você pode declarar rotas que recebam parâmetros da URL.Para isso cada parâmetro é um /* no caminho da rota. Considerando o exemplo anterior:</p>
+<pre class="prettyprint">
+$r3->get('/users/*', function($screenName) {
+	echo "User {$screenName}";
+});
+</pre>
+            <p>Acessando http://localhost/users/alganet ou qualquer outro nome de usuário, além do Alganet, o resultado será "User alganet"(ou o nome escolhido por você.).Multiplos parâmetros podem ser definidos:</p>
+<pre class="prettyprint">
+$r3->get('/users/*/lists/*', function($user, $list) {
+	return "List {$list} from user {$user}.";
+});
+</pre>
+            <p>Os últimos parâmetros na rota são opcionais por default, basta declarar apenas um <strong>->get('/posts/*')</strong> que irá corresponder a <strong>http://localhost/posts/ </strong> sem nenhum parâmetro. Você pode declarar um segundo <strong>->get('/posts')</strong>, agora o Router irá corresponder corretamente, ou tratar o parâmetro ausente, tornando-os anulavéis na função passada.</p>
+<pre class="prettyprint">
+$r3->get('/posts/*/*/*', function($year,$month=null,$day=null) {
+	/** list posts, month and day are optional */
+});
+</pre>
+            <ol>
+                <li>O código acima irá corresponder a <strong>/posts/2010/10/10</strong>, <strong>/posts/2011/01 </strong> e <strong>/posts/2010</strong>.</li>
+                <li>Os parametros opcionais são aceitos apenas ao fim do path. A seguinte forma não aceita parametro opcional: <strong>/posts/*/*/*/comments/* </strong>.</li>
+            </ol>
+    	    <h2>Parâmetro Catch-All | Pegando diversos parâmetros</h2>
+            <p>Existem casos em que você precisa pegar um número indefinido de parâmetros. Você pode usar o Route com o parametro catch-all, veja:</p>
+<pre class="prettyprint">
+$r3->get('/users/*/documents/**', function($user, $documentPath) {
+	return readfile(PATH_STORAGE. implode('/', $documentPath));
+});
+</pre>
+            <Ol>
+                <li>O exemplo citado acima corresponde a <strong>/users/alganet/documents/foo/bar/baz/anything</strong>. Como retorno o parâmetro $user receberá alganet e $documentPath receberá um array com o seguinte conteúdo [foo,bar,baz,anything].</li>
+                <li>Os parâmetros catch-all são definidos por dois astericos: <strong>/**</strong>. </li>
+                <li>Parametros catch-all devem aparecer apenas no fim do path. Os asteriscos duplos em outras posições serão sempre convertidos para asteriscos simples.</li>
+                <li>Catch-all parameters will match after any other route that matches the same pattern.</li>
+            </ol>
+            <h2>Rotas correspodentes</h2>
+            <p>As coisas podem se tornar muito complexas rapidamente. Temos rotas simples, rota com parâmetros, parâmetros opcionais e parâmetros catch-all. Uma regra simples que se deve ter em mente é que o Respect/Rest coincide com as rotas a partir do mais especifico ao mais genérico.</p>
+            <ul>
+                <li>Rotas com mais <strong>/</strong> são mais específicas e serão correspondidas primeiro.</li>
+                <li>Rotas com parâmetros são menos espcificas que rotas sem parâmetros.</li>
+                <li>Rotas com muitos parâmetros são ainda mais menos especificas do que rotas com menos parâmetros.</li>
+                <li>Rotas com parâmetros catch-all são menos específicas e serão combinadas depois.</li>
+            </ul>
+            <p>
+                Resumindo: A <strong>/</strong> e o <strong>*</strong> colocam sua rota no topo da lista de prioridades para combina-los.
+                Respect/Rest classifica rotas automáticamente, mas é altamente recomendado organizar rotas do mais específico para o mais genérico, isto visa melhorar o desempenho e manutenção do seu código.
+            </p>
+            <h2>Matching any HTTP Method</h2>
+            <p>
+                Ás vezes você precisa usar uma rota para  proxy request a outro router. Ao usar o método mágico <strong>any</strong> você poderá passar qualquer requisição HTTP para uma determinada função.
+            </p>
+<pre class="prettyprint">
+ $r3->any('/users/*', function($userName) {
+ /** do anything */
+ });
+</pre>
+            <ol>
+                <li>Qualquer método HTTP irá corresponder a esta rota.</li>
+                <li>
+                    Você pode descobrir qual é a requisição utilizando o seguinte método padrão do PHP <strong>$_SERVER['REQUEST_METHOD'];</strong>
+                 </li>
+            </ol>
+            <h2>Class Controllers</h2>
+              <div class="progress">
+                    <div class="load">  
+                        Continua...                   
+                    </div>
+            </div>
+        </div><!--Fecha Div Content-->
+    </body>
 </html>

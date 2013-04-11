@@ -1,0 +1,214 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+html {
+    min-width: 45em;
+}
+
+/* End CSS Reset*/
+
+/*
+The base for this file was https://github.com/Respect/respect.github.com/blob/master/assets/css/style.css 
+from respect.github.com project (respect.li).
+*/
+
+@font-face{
+    font-family:Champagne;
+    src: url('../fonts/champagne_limousines-webfont.eot');
+    src: url('../fonts/champagne_limousines-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/champagne_limousines-webfont.woff') format('woff'),
+        url('../fonts/champagne_limousines-webfont.ttf') format('truetype'),
+        url('../fonts/champagne_limousines-webfont.svg#ChampagneLimousinesRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font: 11pt  Arial, sans-serif;
+    width: 40em;
+    margin: 0 auto;
+    color: #555;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    position: relative;
+}
+
+header{
+    padding-top:20px;
+}
+
+/* List Style*/
+
+li{
+    list-style-image:url('../img/icons/16/bullet_green.png');
+    margin-bottom: 0.3em;
+    margin-left: 30px;
+}
+
+li a:nth-child(2) {
+    color: #5C9E4F;
+}
+
+ol li{
+    margin-left: 20px;
+    list-style: decimal;
+}
+
+/*Links Style*/
+
+a {
+    color: #777;
+}
+a:hover {
+    color: #5C9E4F;
+}
+
+/* Headers Style*/
+
+h1, h2 {
+    font-family:Champagne;
+    font-weight: normal;
+    color: #5C9E4F;	
+}
+
+h1 {
+    font-size: 4em;
+    margin-bottom: 0.1em;
+    padding-top: 0.2em;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 1.2em 0 0.3em -1.4em;
+    padding-left:1.4em;
+    line-height:32px;
+}
+
+/* Others*/
+
+.original-title {
+    margin-left: 15px;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.progress, strong {
+    background:#f0f6ee;
+    border: 1px solid #e4efe1;
+}
+
+.progress{
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+    border: 1px solid #e4efe1;
+    background: #666;
+    box-shadow: 0px 0px 3px #000;
+    padding: 1px;
+    border-radius: 5px;
+}
+.load{
+    width: 30%;
+    height: auto;
+    background: #f00;
+    padding: 10px;
+    color: #666;
+    background:#f0f6ee;
+}
+.logo img{
+    float: left;
+}
+
+.logo h1{
+    vertical-align: middle;
+}
+
+.logo h2{
+    font-size: 3em;
+    margin-top: 0.2em;
+}
+
+#content{
+    margin: 30px auto 0;    
+    line-height: 1.5em;
+}
+
+#content strong {
+    padding: 1px;
+}
+
+#content p {
+    margin: 0 0 10px;
+}
+
+.prettyprint{
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.social{
+    width: 365px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.twitter{
+    float: left;
+    width: 110px;
+}
+
+.twitter-share-button{
+    margin-left: 10px;    
+}
+
+.facebook{
+    width: 90px;
+    float: left;
+}
+
+/* Fix namespace syntax highlight */
+.namespace .pln{
+    color: #98fb98;
+}
