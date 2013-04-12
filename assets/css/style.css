@@ -141,7 +141,6 @@ h2 {
 
 .progress{
     width: 100%;
-
     text-align: center;
     margin: 10px 0;
     border: 1px solid #e4efe1;
@@ -157,12 +156,7 @@ h2 {
     padding: 10px;
     color: #666;
     background:#f0f6ee;
-    padding: 10px 0;
-    text-align: center;
-    margin: 10px 0;
 }
-
-
 .logo img{
     float: left;
 }
