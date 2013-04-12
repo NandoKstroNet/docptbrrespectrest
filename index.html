@@ -44,6 +44,7 @@
     	</header>	
         <div id="content">
             <div class="progress">
+
                 <div class="load">  
                     Em progresso...                   
                 </div>
@@ -166,10 +167,56 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                  </li>
             </ol>
             <h2>Class Controllers</h2>
+            <p>O método <strong>any</strong> é extremamente útil para vincular classes para os controladores, uma das caracteristicas mais importantes do Respect/Rest.</p>
+<pre class="prettyprint">
+<span class="namespece">use Respect\Rest\Routable;</span> use Respect\Rest\Routable;
+
+class MyArticle implements Routable {
+    public function get($id) { }
+    public function delete($id) { }
+    public function put($id) { }
+}
+
+$r3->any('/article/*', 'MyArticle');
+</pre>
+            <ol>
+                <li>Esta rota vai ligar os métodos de classe para os métodos HTTP correspondentes.</li>
+                <li>Os parâmetros serão enviados para os métodos das classes, tais como os retornos apresentado nos exemplos anteriores.</li>
+                <li>Os controladores são lazy loaders e persistentes. A classe <strong>MyArticle</strong> será instanciada somente quando uma rota corresponder a um de seus métodos, e esta instância será reutilizada em callbacks subsequentes(redirecionamentos, etc.)</li>
+                <li>As classes devem implementar a interface <strong>Respect\Rest\Routable</strong> por questões de segurança. ...</li>
+            </ol>
+            <p>Passar argumentos do construtor para a classe também é válido:</p>
+<pre class="prettyprint">
+$r3->any('/images/*', 'ImageController', array($myImageHandler, $myDb));
+</pre>
+            <ol>
+                <li>O exemplo acima vai passar $myImageHandler e $myDb para o construtor da classe ImageController.</li>
+            </ol>
+            <p>
+                Você também pode instaciar a classe a si mesma, se assim desejar:
+            </p>
+<pre class="prettyprint">
+$r3->any('/downloads/*', $myDownloadManager);
+</pre>
+            <ol>
+                <li>O exemplo acima irá atribuir <strong>$myDownloadManager</strong> existente como um controlador.</li>
+                <li>Esta instância também é reutilizada pelo <strong>Respect\Rest</strong></li>
+            </ol>
+            <p>E você ainda pode utilizar um factory ou DI para construir a classe do controlador:</p>
+<pre class="prettyprint">
+$r3->any('/downloads/*', 'MyControllerClass', array('Factory', 'getController'));
+</pre>
+            <ol>
+                <li>O exemplo acima irá utilizar a classe <strong>MyController</strong> retornado por <strong>Factory::getController</strong> .</li>
+                <li>Esta instância também é reutilizada pelo <strong>Respect\Rest</strong> .</li>
+                <li>O terceiro parâmetro é qualquer variável que pode ser chamada, assim você pode colocar uma closure para construir um exemplo, se assim desejar.</li>
+            </ol>
+            <h2>Routing Streams | Streams de rota.</h2>
               <div class="progress">
                     <div class="load">  
                         Continua...                   
                     </div>
-        </div><!--Fecha Div Content-->
+                </div>
+            </div><!--Fecha Div Content-->
     </body>
 </html>
