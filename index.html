@@ -44,13 +44,10 @@
     	</header>	
         <div id="content">
             <div class="progress">
-<<<<<<< HEAD
+
                 <div class="load">  
                     Em progresso...                   
                 </div>
-=======
-                Em progresso...
->>>>>>> 92f207cf9ce533e9d1de207b785d894956432c45
             </div>
             <p>
                 Controlador elegante para aplicações Restful e criação de APIs.
@@ -142,7 +139,6 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                 <li>Parametros catch-all devem aparecer apenas no fim do path. Os asteriscos duplos em outras posições serão sempre convertidos para asteriscos simples.</li>
                 <li>Catch-all parameters will match after any other route that matches the same pattern.</li>
             </ol>
-<<<<<<< HEAD
             <h2>Rotas correspodentes</h2>
             <p>As coisas podem se tornar muito complexas rapidamente. Temos rotas simples, rota com parâmetros, parâmetros opcionais e parâmetros catch-all. Uma regra simples que se deve ter em mente é que o Respect/Rest coincide com as rotas a partir do mais especifico ao mais genérico.</p>
             <ul>
@@ -171,15 +167,129 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                  </li>
             </ol>
             <h2>Class Controllers</h2>
+            <p>O método <strong>any</strong> é extremamente útil para vincular classes para os controladores, uma das caracteristicas mais importantes do Respect/Rest.</p>
+<pre class="prettyprint">
+<span class="namespece">use Respect\Rest\Routable;</span> use Respect\Rest\Routable;
+
+class MyArticle implements Routable {
+    public function get($id) { }
+    public function delete($id) { }
+    public function put($id) { }
+}
+
+$r3->any('/article/*', 'MyArticle');
+</pre>
+            <ol>
+                <li>Esta rota vai ligar os métodos de classe para os métodos HTTP correspondentes.</li>
+                <li>Os parâmetros serão enviados para os métodos das classes, tais como os retornos apresentado nos exemplos anteriores.</li>
+                <li>Os controladores são lazy loaders e persistentes. A classe <strong>MyArticle</strong> será instanciada somente quando uma rota corresponder a um de seus métodos, e esta instância será reutilizada em callbacks subsequentes(redirecionamentos, etc.)</li>
+                <li>As classes devem implementar a interface <strong>Respect\Rest\Routable</strong> por questões de segurança. ...</li>
+            </ol>
+            <p>Passar argumentos do construtor para a classe também é válido:</p>
+<pre class="prettyprint">
+$r3->any('/images/*', 'ImageController', array($myImageHandler, $myDb));
+</pre>
+            <ol>
+                <li>O exemplo acima vai passar $myImageHandler e $myDb para o construtor da classe ImageController.</li>
+            </ol>
+            <p>
+                Você também pode instaciar a classe a si mesma, se assim desejar:
+            </p>
+<pre class="prettyprint">
+$r3->any('/downloads/*', $myDownloadManager);
+</pre>
+            <ol>
+                <li>O exemplo acima irá atribuir <strong>$myDownloadManager</strong> existente como um controlador.</li>
+                <li>Esta instância também é reutilizada pelo <strong>Respect\Rest</strong></li>
+            </ol>
+            <p>E você ainda pode utilizar um factory ou DI para construir a classe do controlador:</p>
+<pre class="prettyprint">
+$r3->any('/downloads/*', 'MyControllerClass', array('Factory', 'getController'));
+</pre>
+            <ol>
+                <li>O exemplo acima irá utilizar a classe <strong>MyController</strong> retornado por <strong>Factory::getController</strong> .</li>
+                <li>Esta instância também é reutilizada pelo <strong>Respect\Rest</strong> .</li>
+                <li>O terceiro parâmetro é qualquer variável que pode ser chamada, assim você pode colocar uma closure para construir um exemplo, se assim desejar.</li>
+            </ol>
+            <h2>Routing Streams | Streams de rota.</h2>
+            <p>
+                Em muitos casos você necessita de rotas para servir usuários de streams. O roteador não necessita primeiro lidar com arquivos grandes ou precisa esperar o stream terminar antes de servi-lo.
+            </p>
+<pre class="prettyprint">
+$r3->get('/images/*/hi-res', function($imageName) {
+    header('Content-type: image/jpg');
+    return fopen("/path/to/hi/images/{$imageName}.jpg", 'r');
+});
+</pre>
+            <p>
+                O exemplo acima irá redirecionar o arquivo diretamente para o navegador sem mantê-lo na memória.
+            </p>
+            <p class="red">
+                Atenção: Nós criamos uma vunerabilidade de segurança no exemplo: Passando um parâmetro diretamente para um handle <strong>fopen</strong>. Por favor valide todos os parâmetros de entrada do usuário antes de usá-los. Isto foi somente para uma demonstração! 
+            </p>
+            <h2>Routing Static Values | Roteamento com Valores Estáticos</h2>
+            <p>
+                Sem surpresas aqui. Você pode fazer uma rota retornar uma cadeia de caracteres simples:
+            </p>
+<pre class="prettyprint">
+$r3->get('/greetings', 'Hello!');
+</pre>
+            <h2>Forwarding Routes | Rotas de Encaminhamento</h2>
+            <p>
+                Respect\Rest possui um mecanismo de encaminhamento interno. Primeiramente é preciso entender que cada declaração de rota retorna uma instância:
+            </p>
+<pre class="prettyprint">
+$usersRoute = $r3->any('/users', 'UsersController');
+</pre>
+            <p>Em seguida, você pode usar(<strong>use</strong>) e retornar(<strong>return</strong>) esta rota em outro script:</p>
+<pre class="prettyprint">
+$r3->any('/premium', function($user) use ($db, $usersRoute) {
+if (!$db->userPremium($user)) {
+  return $usersRoute;
+}
+});
+</pre>
+            <p>O exemplo acima irá redirecionar o usuário para uma outra rota quando o mesmo não tiver permissões suficientes.</p>
+            <h2>When Routine (if) | Rotina (if)</h2>
+            <p>
+                Respect\Rest usa uma abordagem diferente para validar os parâmetros de rota:
+            </p>
+<pre class="prettyprint">
+$r3->get('/documents/*', function($documentId) {
+/** do something */
+})->when(function($documentId) {
+return is_numeric($documentId) && $documentId > 0;
+});
+</pre>
+            <ol>
+                <li>Isso irá corresponder a rota somente se a chamada de retorno for a correspondente.</li>
+                <li>O parâmetro <strong>$documentId</strong> deve ter o mesmo nome da ação e da condição.(Mas necessariamente precisar parecer na mesma ordem.)</li>
+                <li>Você pode especificar mais de um parâmetro de retorno por cada condição.</li>
+                <li>Você pode especificar mais de um callback: <strong>when($cb1)->when($cb2)->when($etc)</strong></li>
+                <li>Condições também irão sincronizar com bind parâmetros de classes e métodos de instância.</li>
+            </ol>
+            <p>
+                Isto traz a possibilidade de cada usuário validar parâmetros usando qualquer rotina personalizada e não apenas os tipos de dados como o <strong>int</strong> ou <strong>string</strong>.
+            </p>
+            <p>
+                É altamente recomendado utilizar uma biblioteca poderosa de validação neste momento. Veja o <a href="http://github.com/Respect/Validation" target="_blank" title="Respect Validation">Respect\Validation</a>.
+            </p>
+<pre class="prettyprint">
+$r3->get('/images/*/hi-res', function($imageName) {
+    header('Content-type: image/jpg');
+    return fopen("/path/to/hi/images/{$imageName}.jpg", 'r');
+})->when(function($imageName) {
+    /** Using Respect Validation alias to `V` */
+    return V::alphanum(".")->length(5,155)
+            ->noWhitespace()->validate($imageName);
+});
+</pre>
+            <h2>By Routine (before) | Rotina (before)</h2>
               <div class="progress">
                     <div class="load">  
                         Continua...                   
                     </div>
-=======
-            <div class="progress">
-                Continua...
->>>>>>> 92f207cf9ce533e9d1de207b785d894956432c45
-            </div>
-        </div><!--Fecha Div Content-->
+                </div>
+            </div><!--Fecha Div Content-->
     </body>
 </html>

@@ -141,7 +141,6 @@ h2 {
 
 .progress{
     width: 100%;
-<<<<<<< HEAD
     text-align: center;
     margin: 10px 0;
     border: 1px solid #e4efe1;
@@ -151,20 +150,14 @@ h2 {
     border-radius: 5px;
 }
 .load{
-    width: 30%;
+    width: 50%;
     height: auto;
     background: #f00;
     padding: 10px;
     color: #666;
     background:#f0f6ee;
 }
-=======
-    padding: 10px 0;
-    text-align: center;
-    margin: 10px 0;
-}
 
->>>>>>> 92f207cf9ce533e9d1de207b785d894956432c45
 .logo img{
     float: left;
 }
@@ -194,6 +187,9 @@ h2 {
 .prettyprint{
     padding: 5px;
     margin-bottom: 10px;
+}
+.red{
+    color: #f00;
 }
 
 .social{
