@@ -212,7 +212,6 @@ $r3->any('/downloads/*', 'MyControllerClass', array('Factory', 'getController'))
                 <li>O terceiro parâmetro é qualquer variável que pode ser chamada, assim você pode colocar uma closure para construir um exemplo, se assim desejar.</li>
             </ol>
             <h2>Routing Streams | Streams de rota.</h2>
-<<<<<<< HEAD
             <p>
                 Em muitos casos você necessita de rotas para servir usuários de streams. O roteador não necessita primeiro lidar com arquivos grandes ou precisa esperar o stream terminar antes de servi-lo.
             </p>
@@ -286,8 +285,38 @@ $r3->get('/images/*/hi-res', function($imageName) {
 });
 </pre>
             <h2>By Routine (before) | Rotina (before)</h2>
-=======
->>>>>>> af5ede98d1affdb39e2e0a69d5b827bc2a54682c
+            <p>
+                Às vezes você precisa executar algo antes que uma rota execute seu trabalho. Isso é útil para registros, autenticações e atividades similares.            
+            </p>
+<pre class="prettyprint">
+$r3->get('/artists/*/albums/*', function($artistName, $albumName) {
+/** do something */
+})->by(function($albumName) use ($myLogger) {
+$myLogger->logAlbumVisit($albumName);
+});
+</pre>
+              <ol>
+                  <li>Isto irá executar o callback definido antes da ação da rota que precisa corresponder a uma rota.</li>
+                  <li>Os parâmetros são sincronizado pelo nome e não pela ordem, como com <strong>when</strong>.</li>
+                  <li>Você pode especificar mais de um parâmetro de retorno por chamada de proxy.</li>
+                  <li>Você pode especificar mais de um proxy: <strong>by($cb1)->by($cb2)->by($etc)</strong>.</li>
+                  <li>Um <strong>return false</strong> irá parar a execução de qualquer proxy seguinte, bem como as ações da rota.</li>
+                  <li>Proxies também irão sincronizar com parâmetros de bind class e métodos de instância.</li>
+              </ol>
+              <p>
+                  Se sua rotina retorna <strong>false</strong>, então o método/função de rota não será processado. Se você retornar uma instância de outra rota, então o próximo método interno será executado.
+              </p>
+              <h2>Through Routine (after) | Através da rotina(after)</h2>
+              <p>
+                  Similar ao <strong>->by</strong>, porém é executado após a rota fazer seu trabalho. No exemplo a seguir, nós estamos mostrando algo semelhante para invalidar um cache depois de enviar e salvar algumas informações novas.
+              </p>
+<pre class="prettyprint">
+$r3->post('/artists/*/albums/*', function($artistName, $albumName) {
+/** save some artist info */
+})->through(function() use($myCache) {
+$myCache->clear($artistName, $albumName);
+});
+</pre>
               <div class="progress">
                     <div class="load">  
                         Continua...                   

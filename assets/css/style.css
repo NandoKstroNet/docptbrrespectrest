@@ -150,21 +150,13 @@ h2 {
     border-radius: 5px;
 }
 .load{
-<<<<<<< HEAD
     width: 50%;
-=======
-    width: 40%;
->>>>>>> af5ede98d1affdb39e2e0a69d5b827bc2a54682c
     height: auto;
     background: #f00;
     padding: 10px;
     color: #666;
     background:#f0f6ee;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> af5ede98d1affdb39e2e0a69d5b827bc2a54682c
 .logo img{
     float: left;
 }
