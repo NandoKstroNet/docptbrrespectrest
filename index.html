@@ -32,7 +32,7 @@
                     <a href="https://github.com/NandoKstroNet/docptbrrespectrest"><img style="z-index: 999; position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
                 </div>
             </div>
-            <div class="logo">
+            <div class="logo" id="logo">
                 <a href="http://respect.li">
                     <img src="assets/img/respect.png" alt="Respect/Rest" width="140px"/>
                 </a>
@@ -41,14 +41,8 @@
                    <h2>Respect/Rest</h2>
                 </hgroup>
             </div>            
-    	</header>	
+    	</header>
         <div id="content">
-            <div class="progress">
-
-                <div class="load">  
-                    Em progresso...                   
-                </div>
-            </div>
             <p>
                 Controlador elegante para aplicações Restful e criação de APIs.
             </p>
@@ -57,12 +51,43 @@
                 <li>Não faz mudanças em seu PHP, pequena curva de aprendizado.</li>
                 <li>Completamente RestFul, caminho certo para construir aplicações.</li>
             </ul>
+          <nav class="menu">
+                    <ul>
+                        <li><a href="#configuration">Configuration</a></li>
+                        <li><a href="#dispatching">Dispatching</a></li>
+                        <li><a href="#simple-routing">Simple Routing</a></li>
+                        <li><a href="#parameters">Parameters</a></li>
+                        <li><a href="#catch-all">Catch-all</a></li>
+                        <li><a href="#matching">Matching</a></li>
+                        <li><a href="#methods">Methods</a></li>
+                        <li><a href="#controllers">Controllers</a></li>
+                        <li><a href="#streams">Streams</a></li>
+                        <li><a href="#static">Static</a></li>
+                        <li><a href="#forwarding">Forwarding</a></li>
+                        <li><a href="#when">When</a></li>
+                        <li><a href="#by">By</a></li>
+                        <li><a href="#through">Through</a></li>
+                        <li><a href="#controller-splitting">Controller Splitting</a></li>
+                        <li><a href="#conneg">Conneg</a></li>
+                        <li><a href="#basic-auth">Basic Auth</a></li>
+                        <li><a href="#filtering-browsers">User-Agent</a></li>
+                        <li><a href="#content-type">Content-Type</a></li>
+                        <li><a href="#http-errors">HTTP Errors</a></li>
+                        <li><a href="#restful-extras">RESTful Extras</a></li>
+                        <li><a href="#anti-patterns">Anti-Patterns</a></li>
+                        <li><a href="#own-routines">Own Routines</a></li>
+                        <li><a href="#error-handling">Error Handling</a></li>
+                    </ul>
+            </nav>  
             <h2>Instalação</h2>
+            <a href="#logo">Topo</a>
             <p>Packages podem ser encontrados no
                 <a href="http://respect.li/pear" title="Respect/Rest PEAR">PEAR</a> e <a href="http://packagist.org/packages/Respect/Rest" title="Respect/Rest Composer">Composer</a>.
     			Autoloading compativél com <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.
             </p>
-            <h2>Configuração</h2>
+
+            <h2 id="configuration">Configuração</h2>
+            <a href="#logo">Topo</a>
             <p>Bootstrap é bem simples, basta criar uma instância de Respect\Rest\Router</p>
 <pre class="prettyprint">
 use <span class="namespace">Respect\Rest\Router</span>;
@@ -79,7 +104,8 @@ $r3 = new Router('/myapp');
 $r3 = new Router('/index.php/');
 </pre>
     		<p>Isto presupões que as URLs no projeto iniciarão com esses namespaces.</p>
-    		<h2>Dispatching | Executando</h2>
+    		<h2 id="dispatching">Dispatching | Executando</h2>
+            <a href="#logo">Topo</a>
     		<p>O router é auto-executado, você não precisa realizar nenhuma ação para que o mesmo execute de fato, a não ser definir as rotas. Mas caso queira omitir tal comportamento proceda da seguinte maneira:</p>
 <pre class="prettyprint">
 $r3->isAutoDispatched = false;
@@ -89,7 +115,8 @@ $r3->isAutoDispatched = false;
 print $r3->run();
 </pre>
     		<p>Você pode imprimir a saída ou armazena-la em uma variável, se assim desejar. Isso permite um melhor teste e a integração do Router com sua app existente.</p>
-            <h2>Roteamento Simples</h2>
+            <h2 id="simple-routing">Roteamento Simples</h2>
+            <a href="#logo">Topo</a>
             <p>Um "Olá Mundo" ficaria assim:</p>
 <pre class="prettyprint">
 $r3->get('/', function() {
@@ -103,7 +130,9 @@ $r3->get('/hello', function() {
 });
 </pre>
             <p>Neste caso, ao acessar http://localhost/hello a saída em seu browser será "Hello from Path".</p>
-            <h2>Usando parametros</h2>
+
+            <h2 id="parameters">Usando parametros</h2>
+            <a href="#logo">Topo</a>
             <p>Você pode declarar rotas que recebam parâmetros da URL.Para isso cada parâmetro é um /* no caminho da rota. Considerando o exemplo anterior:</p>
 <pre class="prettyprint">
 $r3->get('/users/*', function($screenName) {
@@ -126,7 +155,9 @@ $r3->get('/posts/*/*/*', function($year,$month=null,$day=null) {
                 <li>O código acima irá corresponder a <strong>/posts/2010/10/10</strong>, <strong>/posts/2011/01 </strong> e <strong>/posts/2010</strong>.</li>
                 <li>Os parametros opcionais são aceitos apenas ao fim do path. A seguinte forma não aceita parametro opcional: <strong>/posts/*/*/*/comments/* </strong>.</li>
             </ol>
-    	    <h2>Parâmetro Catch-All | Pegando diversos parâmetros</h2>
+
+    	    <h2 id="catch-all">Parâmetro Catch-All | Pegando diversos parâmetros</h2>
+            <a href="#logo">Topo</a>
             <p>Existem casos em que você precisa pegar um número indefinido de parâmetros. Você pode usar o Route com o parametro catch-all, veja:</p>
 <pre class="prettyprint">
 $r3->get('/users/*/documents/**', function($user, $documentPath) {
@@ -139,7 +170,9 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                 <li>Parametros catch-all devem aparecer apenas no fim do path. Os asteriscos duplos em outras posições serão sempre convertidos para asteriscos simples.</li>
                 <li>Catch-all parameters will match after any other route that matches the same pattern.</li>
             </ol>
-            <h2>Rotas correspodentes</h2>
+
+            <h2 id="matching">Rotas correspondentes</h2>
+            <a href="#logo">Topo</a>
             <p>As coisas podem se tornar muito complexas rapidamente. Temos rotas simples, rota com parâmetros, parâmetros opcionais e parâmetros catch-all. Uma regra simples que se deve ter em mente é que o Respect/Rest coincide com as rotas a partir do mais especifico ao mais genérico.</p>
             <ul>
                 <li>Rotas com mais <strong>/</strong> são mais específicas e serão correspondidas primeiro.</li>
@@ -151,7 +184,9 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                 Resumindo: A <strong>/</strong> e o <strong>*</strong> colocam sua rota no topo da lista de prioridades para combina-los.
                 Respect/Rest classifica rotas automáticamente, mas é altamente recomendado organizar rotas do mais específico para o mais genérico, isto visa melhorar o desempenho e manutenção do seu código.
             </p>
-            <h2>Matching any HTTP Method</h2>
+
+            <h2 id="methods">Matching any HTTP Method</h2>
+            <a href="#logo">Topo</a>
             <p>
                 Ás vezes você precisa usar uma rota para  proxy request a outro router. Ao usar o método mágico <strong>any</strong> você poderá passar qualquer requisição HTTP para uma determinada função.
             </p>
@@ -166,7 +201,9 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                     Você pode descobrir qual é a requisição utilizando o seguinte método padrão do PHP <strong>$_SERVER['REQUEST_METHOD'];</strong>
                  </li>
             </ol>
-            <h2>Class Controllers</h2>
+
+            <h2 id="controllers">Class Controllers</h2>
+            <a href="#logo">Topo</a>
             <p>O método <strong>any</strong> é extremamente útil para vincular classes para os controladores, uma das caracteristicas mais importantes do Respect/Rest.</p>
 <pre class="prettyprint">
 <span class="namespece">use Respect\Rest\Routable;</span> use Respect\Rest\Routable;
@@ -211,7 +248,7 @@ $r3->any('/downloads/*', 'MyControllerClass', array('Factory', 'getController'))
                 <li>Esta instância também é reutilizada pelo <strong>Respect\Rest</strong> .</li>
                 <li>O terceiro parâmetro é qualquer variável que pode ser chamada, assim você pode colocar uma closure para construir um exemplo, se assim desejar.</li>
             </ol>
-            <h2>Routing Streams | Streams de rota.</h2>
+            <h2 id="streams">Routing Streams | Streams de rota.</h2>
             <p>
                 Em muitos casos você necessita de rotas para servir usuários de streams. O roteador não necessita primeiro lidar com arquivos grandes ou precisa esperar o stream terminar antes de servi-lo.
             </p>
@@ -227,14 +264,16 @@ $r3->get('/images/*/hi-res', function($imageName) {
             <p class="red">
                 Atenção: Nós criamos uma vunerabilidade de segurança no exemplo: Passando um parâmetro diretamente para um handle <strong>fopen</strong>. Por favor valide todos os parâmetros de entrada do usuário antes de usá-los. Isto foi somente para uma demonstração! 
             </p>
-            <h2>Routing Static Values | Roteamento com Valores Estáticos</h2>
+            <h2 id="static">Routing Static Values | Roteamento com Valores Estáticos</h2>
+            <a href="#logo">Topo</a>
             <p>
                 Sem surpresas aqui. Você pode fazer uma rota retornar uma cadeia de caracteres simples:
             </p>
 <pre class="prettyprint">
 $r3->get('/greetings', 'Hello!');
 </pre>
-            <h2>Forwarding Routes | Rotas de Encaminhamento</h2>
+            <h2 id="forwarding">Forwarding Routes | Rotas de Encaminhamento</h2>
+            <a href="#logo">Topo</a>
             <p>
                 Respect\Rest possui um mecanismo de encaminhamento interno. Primeiramente é preciso entender que cada declaração de rota retorna uma instância:
             </p>
@@ -250,7 +289,7 @@ if (!$db->userPremium($user)) {
 });
 </pre>
             <p>O exemplo acima irá redirecionar o usuário para uma outra rota quando o mesmo não tiver permissões suficientes.</p>
-            <h2>When Routine (if) | Rotina (if)</h2>
+            <h2 id="when">When Routine (if) | Rotina (if)</h2>
             <p>
                 Respect\Rest usa uma abordagem diferente para validar os parâmetros de rota:
             </p>
@@ -284,15 +323,16 @@ $r3->get('/images/*/hi-res', function($imageName) {
             ->noWhitespace()->validate($imageName);
 });
 </pre>
-            <h2>By Routine (before) | Rotina (before)</h2>
+            <h2 id="by">By Routine (before) | Rotina (before)</h2>
+            <a href="#logo">Topo</a>
             <p>
                 Às vezes você precisa executar algo antes que uma rota execute seu trabalho. Isso é útil para registros, autenticações e atividades similares.            
             </p>
 <pre class="prettyprint">
 $r3->get('/artists/*/albums/*', function($artistName, $albumName) {
 /** do something */
-})->by(function($albumName) use ($myLogger) {
-$myLogger->logAlbumVisit($albumName);
+    })->by(function($albumName) use ($myLogger) {
+    $myLogger->logAlbumVisit($albumName);
 });
 </pre>
               <ol>
@@ -306,22 +346,222 @@ $myLogger->logAlbumVisit($albumName);
               <p>
                   Se sua rotina retorna <strong>false</strong>, então o método/função de rota não será processado. Se você retornar uma instância de outra rota, então o próximo método interno será executado.
               </p>
-              <h2>Through Routine (after) | Através da rotina(after)</h2>
+
+              <h2 id="through">Through Routine (after) | Através da rotina(after)</h2>
+              <a href="#logo">Topo</a>
               <p>
                   Similar ao <strong>->by</strong>, porém é executado após a rota fazer seu trabalho. No exemplo a seguir, nós estamos mostrando algo semelhante para invalidar um cache depois de enviar e salvar algumas informações novas.
               </p>
 <pre class="prettyprint">
 $r3->post('/artists/*/albums/*', function($artistName, $albumName) {
-/** save some artist info */
-})->through(function() use($myCache) {
-$myCache->clear($artistName, $albumName);
+    /** save some artist info */
+    })->through(function() use($myCache) {
+    $myCache->clear($artistName, $albumName);
 });
 </pre>
-              <div class="progress">
-                    <div class="load">  
-                        Continua...                   
-                    </div>
-                </div>
+              <ol>
+                  <li>
+                    <strong>by</strong> proxies serão executadas antes das ações da rota, <strong>through proxies</strong> serão executadas depois.
+                </li>
+                <li>
+                    Você é livre para usá-los em conjunto ou separados.
+                </li>
+                <li>
+                    <strong>through</strong> também pode receber parâmetros por nome.
+                </li>
+              </ol>
+              <p>
+                O exemplo acima permite que você faça alguma coisa com base nos parâmetros da rota, mas quando processado após a execução da rota, é desejavel para processar sua saida também. Isto pode ser conseguido com nested closure.
+              </p>
+<pre class="prettyprint">
+$r3->any('/settings', 'SetingsController')->through(function(){
+    return function($data) {
+    if (isset($settings['admin_user'])) {
+        unset($settings['admin_user']);
+    }
+    return $data;
+};
+});   
+</pre>
+                <p>
+                    O exemplo ilustrativo acima remove sensitive keys de um controlador de configurações antes de processar a saída.
+                </p>
+
+                <h2 id="controller-splitting">Controller Splitting | Controlador de Divisão</h2>
+                <a href="#logo">Topo</a>
+                <p>Ao usar as rotinas você é encorajado a separar a lógica do controlador dos componentes. Você pode reutizá-los</p>
+<pre class="prettyprint">
+$logRoutine = function() use ($myLogger, $r3) {
+    $myLogger->logVisit($r3->request->path);
+    };
+
+    $r3->any('/users', 'UsersController')->by($logRoutine);
+    $r3->any('/products', 'ProductsController')->by($logRoutine);
+</pre>
+                <p>É uma maneira simples de rotinas para cada rota no router.</p>
+<pre class="prettyprint">
+    $r3->always('By', $logRoutine);
+</pre>
+                <p>Você pode usar o sync param para obter vantagem disto:</p>
+<pre class="prettyprint">
+    $r3->always('When', function($user=null) {
+        if ($user) {
+          return strlen($user) > 3;
+        }
+    });
+
+    $r3->any('/products', function () { /***/ });
+    $r3->any('/users/*', function ($user) { /***/ });
+    $r3->any('/users/*/products', function ($user) { /***/ });
+    $r3->any('/listeners/*', function ($user) { /***/ });
+</pre>
+                <p>Uma vez que existe três rotas com parâmetros <strong>$user</strong>, <strong>when</strong>  irá verificar automaticamente pelo seu nome.</p>
+
+                <h2 id="conneg">Content Negotiation | Negociação de conteúdo</h2>
+                <a href="#logo">Topo</a>
+                <p>
+                    Respect\Rest atualmente oferece 4 tipos distintos de Accept Header: Mimetype, Encoding, Language and Charset. Caso de uso:
+                </p>
+<pre class="prettyprint">
+$r3->get('/about', function() {
+        return array('v' => 2.0);
+    })->acceptLanguage(array(
+        'en' => function($data) { return array("Version" => $data['v']); },
+        'pt' => function($data) { return array("Versão"  => $data['v']); }
+    ))->accept(array(
+
+    'text/html' => function($data) {
+     list($k,$v)=each($data);
+
+     return "<strong>$k</strong>: $v";
+        },
+   'application/json' => 'json_encode'
+    ));
+</pre>
+            <p>
+                Como em cada rotina, rotinas conneg(Content Negotiation) são executadas na mesma ordem que você anexar nas rotas.
+                Você pode usar <strong>->always</strong> para aplicar esta rotina para cada rota no Router.
+            </p>
+            <p>Por favor, note que ao retornar streams, também são chamados de conneg routines. Você pode aproveitar isso ao processar streams. O exemplo hardcore a seguir, usa o deflate encoding, diretamente no browser:</p>
+<pre class="prettyprint">
+$r3->get('/text/*', function($filename) {
+    return fopen('data/'.$filename, 'r+');
+  })->acceptEncoding(array(
+ 
+ 'deflate' => function($stream) {
+
+  stream_filter_append($stream, 'zlib.deflate', STREAM_FILTER_READ);
+  
+  return $stream; /** now deflated on demand */
+}
+));
+</pre>
+              <p>Ao aplicarmos rotinas conneg em várias rotas que podem retornar streams você(realmente) deve verificar se há <strong>is_resourcing()</strong> antes de fazer qualquer coisa.</p>
+
+              <h2 id="basic-auth">Basic HTTP Auth | HTTP Auth Básico</h2>
+              <a href="#logo">Topo</a>
+              <p>Suporte básico para autenticação HTTP já é implementado como rotina:</p>
+<pre class="prettyprint">
+    $r3->get('/home', 'HomeController')->authBasic('My Realm', function($user, $pass) {
+        return $user === 'admin' && $user === 'p4ss';
+    }); 
+</pre>
+              <p>Você receberá um usuário e senha submetidos pelo usuário e você só precisar retornar <strong>true</strong> ou <strong>false</strong>. TRUE indica que o usuário pode ser autenticado.</p>
+              <p>Respect\Rest irá lidar com o fluxo de autenticação, enviando os cabeçalhos apropriados, quando não autenticado. Você também pode retornar outras rotas, que irá atuar como uma frente interna(consulte a seção foward above acima).</p>
+
+              <h2 id="filtering-browsers">Filtering Browsers | Filtrando Browsers</h2>
+              <a href="#logo">Topo</a>
+              <p>
+                  Abaixo está um exemplo desmonstrativo de como bloquear acesso de mobile devices:
+              </p>
+<pre class="prettyprint">
+    $r3->get('/videos/*', 'VideosController')->userAgent(array(
+        'iphone|android' => function(){
+         header('HTTP/1.1 403 Forbidden');
+         return false; /** do not process the route. */
+        }
+    ));
+</pre>
+              <p>Você pode passar vários itens no array como nas rotinas conneg. As chaves do array é uma correspondência de expressão regular sem delimitadores.</p>
+
+              <h2 id="content-type">Input Content-Type (input data)</h2>
+              <a href="#logo">Topo</a>
+              <p>Observe que isso atualmente não é implementado.</p>
+              <p>Por padrão os formulários HTML enviam dados via POST como <strong>multipart/form-data</strong>, mas clientes API podem enviar em outros formatos.Requisições PUT muitas vezes enviam outros tipos de MIME. Você pode pre-processar esses dados antes de fazer qualquer coisa:</p>
+<pre class="prettyprint">
+    $r3->post('/timeline', function() {
+        return file_get_contents('php://input');
+    })->contentType(array(
+        'multipart/form-data' => function($input) {
+            parse_str($input, $output);
+            return $output;
+        },
+        'application/json' => function($input) {
+            return my_json_converter($input);
+        },
+        'text/xml' => function($input) {
+            return my_xml_converter($input);
+        },
+    ));
+</pre>
+              <h2 id="http-errors">HTTP Errors</h2>
+              <a href="#logo">Topo</a>
+              <p>Respect\Rest atualmente lida com os seguinte tipos de erros por padrão:</p>
+              <ul>
+                  <li>404, quando não existe nenhuma correspodência nos paths da rota.</li>
+                  <li>401, quando o cliente envia uma solicitação de não autenticado para uma rota usando a rotina<strong>authBasic</strong></li>
+                  <li>405, quando um caminho correpondente for encontrado, mas o método não for especificado.</li>
+                  <li>400, quando a validação <strong>when</strong> falhar.</li>
+                  <li>406, quando o route path e o método batem mas o content-negotiation não.</li>
+              </ul>
+              <h2 id="restful-extras">RESTful Extras</h2>
+              <a href="#logo">Topo</a>
+              <ul>
+                <li>
+                  Uma requisição HEAD trabalha automáticamente enviando os cabeçalhos de requisições GET sem corpo. Você pode substituir esse comportamento declarando rotas personalizadas <strong>head</strong> 
+                 </li>
+                 <li>Uma requisição OPTIONS para <strong>*</strong> ou qualquer caminho de rota retorna o cabeçalho <strong>Allow</strong> correto.</li>
+                     <li>Quando retorna 405, os cabeçalho <strong>Allow</strong> também estão definidos corretamente.</li>
+                </ul>
+                <h2 id="anti-patterns">Anti-Patterns</h2>
+                <a href="#logo">Topo</a>
+                <p>Você pode definir <strong>$r3->methodOverriding = true</strong> para permitir que <strong>?_method=ANYMETHOD</strong> como o URI para substituir métodos HTTP padrões. Isto é <strong>false</strong> por default.</p>
+                <h2 id="own-routines">Sua próprias rotinas</h2>
+                <a href="#logo">Topo</a>
+                <p>Rotinas são classes no namespace Respect\Rest\Routines. Mas você pode usar suas próprias rotinas usando a instância:</p>
+<pre class="prettyprint">
+    $r3->get('/greetings', 'Hello World')->appendRoutine(new MyRoutine);
+</pre>
+                <p>No exemplo acima, <strong>MyAbove</strong> é uma rotina de usuário fornecida e declarada em uma router. Rotinas personalizadas têm a opção de várias interface diferentes, que podem ser implementadas:</p>
+                <ul>
+                    <li>IgnorableFileExtension - Instrui o roteador a ignorar a extensão de arquivo em pedido.</li>
+                    <li>ParamSynced  - Sincroniza parâmetros com a rota function/method.</li>
+                    <li>ProxyableBy - Instrui o router a executar o método <strong>by()</strong> antes da rota.</li>
+                    <li>ProxyableThrough - Instrui o router a executar o método <strong>through()</strong> depois da rota.</li>
+                    <li>ProxyableWhen - Instrui o router a executar o método <strong>when</strong> para validar a partida da rota.</li>
+                    <li>Unique - Faz a rotina ser substituida, não anexada, se mais de um é declarado para o mesmo tipo.</li>
+                </ul>
+                <p>Você pode usar qualquer combinação acima mas terá de implementar a interface Routinable.</p>
+                
+                <h2 id="error-handling">Tratamentos de erro</h2>
+                <a href="#logo">Topo</a>
+                <p>O Respect\Rest oferece duas maneiras de se tratar erros. A primeira é usando Exception Routes:</p>
+<pre class="prettyprint">
+    $r3->exceptionRoute('InvalidArgumentException', 
+          function (InvalidArgumentException $e) {
+        return 'Sorry, this error happened: '.$e->getMessage();
+    });
+</pre>
+              <p>
+                Sempre que uma exceção não capturada aparece em qualquer rota, será presa e encaminhada para outra rota ao lado. Da mesma forma, existe uma rota de erros PHP:</p>
+<pre class="prettyprint">
+    $r3->errorRoute(function (array $err) {
+        return 'Sorry, this errors happened: '.var_dump($err);
+    });
+</pre>
+         <hr>
+         <small>fim... <a href="#logo">Topo</a></small>
+               </div>
             </div><!--Fecha Div Content-->
     </body>
 </html>
