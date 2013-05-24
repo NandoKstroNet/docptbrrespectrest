@@ -110,7 +110,7 @@ a:hover {
 h1, h2 {
     font-family:Champagne;
     font-weight: normal;
-    color: #5C9E4F;	
+    color: #5C9E4F;   
 }
 
 h1 {
@@ -125,7 +125,19 @@ h2 {
     padding-left:1.4em;
     line-height:32px;
 }
-
+/**/
+.menu {
+    border-top: 1px dotted #063;
+    border-bottom: 1px dotted #063;
+    margin: 10px 0;
+    display: table;
+    text-align: left;
+    padding: 5px 0;
+}
+.menu li {
+    float: left;
+    width: 150px;
+}
 /* Others*/
 
 .original-title {
