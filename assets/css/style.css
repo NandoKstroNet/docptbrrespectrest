@@ -224,6 +224,12 @@ h2 {
 }
 
 /* Fix namespace syntax highlight */
-.namespace .pln{
+pre .namespace .pln{
     color: #98fb98;
+}
+
+pre{
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 1.7em;
 }
