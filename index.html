@@ -191,9 +191,9 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
                 Ás vezes você precisa usar uma rota para  proxy request a outro router. Ao usar o método mágico <strong>any</strong> você poderá passar qualquer requisição HTTP para uma determinada função.
             </p>
 <pre class="prettyprint">
- $r3->any('/users/*', function($userName) {
- /** do anything */
- });
+$r3->any('/users/*', function($userName) {
+    /** do anything */
+});
 </pre>
             <ol>
                 <li>Qualquer método HTTP irá corresponder a esta rota.</li>
@@ -206,7 +206,7 @@ $r3->get('/users/*/documents/**', function($user, $documentPath) {
             <a href="#logo">Topo</a>
             <p>O método <strong>any</strong> é extremamente útil para vincular classes para os controladores, uma das caracteristicas mais importantes do Respect/Rest.</p>
 <pre class="prettyprint">
-<span class="namespece">use Respect\Rest\Routable;</span> use Respect\Rest\Routable;
+use Respect<span class="namespace">\Rest\Routable;</span> use Respect<span class="namespace">\Rest\Routable</span>;
 
 class MyArticle implements Routable {
     public function get($id) { }
@@ -283,9 +283,9 @@ $usersRoute = $r3->any('/users', 'UsersController');
             <p>Em seguida, você pode usar(<strong>use</strong>) e retornar(<strong>return</strong>) esta rota em outro script:</p>
 <pre class="prettyprint">
 $r3->any('/premium', function($user) use ($db, $usersRoute) {
-if (!$db->userPremium($user)) {
-  return $usersRoute;
-}
+    if (!$db->userPremium($user)) {
+        return $usersRoute;
+    }
 });
 </pre>
             <p>O exemplo acima irá redirecionar o usuário para uma outra rota quando o mesmo não tiver permissões suficientes.</p>
@@ -295,9 +295,9 @@ if (!$db->userPremium($user)) {
             </p>
 <pre class="prettyprint">
 $r3->get('/documents/*', function($documentId) {
-/** do something */
+    /** do something */
 })->when(function($documentId) {
-return is_numeric($documentId) && $documentId > 0;
+    return is_numeric($documentId) && $documentId > 0;
 });
 </pre>
             <ol>
@@ -330,8 +330,8 @@ $r3->get('/images/*/hi-res', function($imageName) {
             </p>
 <pre class="prettyprint">
 $r3->get('/artists/*/albums/*', function($artistName, $albumName) {
-/** do something */
-    })->by(function($albumName) use ($myLogger) {
+    /** do something */
+})->by(function($albumName) use ($myLogger) {
     $myLogger->logAlbumVisit($albumName);
 });
 </pre>
@@ -355,7 +355,7 @@ $r3->get('/artists/*/albums/*', function($artistName, $albumName) {
 <pre class="prettyprint">
 $r3->post('/artists/*/albums/*', function($artistName, $albumName) {
     /** save some artist info */
-    })->through(function() use($myCache) {
+})->through(function() use($myCache) {
     $myCache->clear($artistName, $albumName);
 });
 </pre>
@@ -376,11 +376,11 @@ $r3->post('/artists/*/albums/*', function($artistName, $albumName) {
 <pre class="prettyprint">
 $r3->any('/settings', 'SetingsController')->through(function(){
     return function($data) {
-    if (isset($settings['admin_user'])) {
-        unset($settings['admin_user']);
-    }
-    return $data;
-};
+        if (isset($settings['admin_user'])) {
+            unset($settings['admin_user']);
+        }
+        return $data;
+    };
 });   
 </pre>
                 <p>
@@ -393,27 +393,27 @@ $r3->any('/settings', 'SetingsController')->through(function(){
 <pre class="prettyprint">
 $logRoutine = function() use ($myLogger, $r3) {
     $myLogger->logVisit($r3->request->path);
-    };
+};
 
-    $r3->any('/users', 'UsersController')->by($logRoutine);
-    $r3->any('/products', 'ProductsController')->by($logRoutine);
+$r3->any('/users', 'UsersController')->by($logRoutine);
+$r3->any('/products', 'ProductsController')->by($logRoutine);
 </pre>
                 <p>É uma maneira simples de rotinas para cada rota no router.</p>
 <pre class="prettyprint">
-    $r3->always('By', $logRoutine);
+$r3->always('By', $logRoutine);
 </pre>
                 <p>Você pode usar o sync param para obter vantagem disto:</p>
 <pre class="prettyprint">
-    $r3->always('When', function($user=null) {
-        if ($user) {
-          return strlen($user) > 3;
-        }
-    });
+$r3->always('When', function($user=null) {
+    if ($user) {
+      return strlen($user) > 3;
+    }
+});
 
-    $r3->any('/products', function () { /***/ });
-    $r3->any('/users/*', function ($user) { /***/ });
-    $r3->any('/users/*/products', function ($user) { /***/ });
-    $r3->any('/listeners/*', function ($user) { /***/ });
+$r3->any('/products', function () { /***/ });
+$r3->any('/users/*', function ($user) { /***/ });
+$r3->any('/users/*/products', function ($user) { /***/ });
+$r3->any('/listeners/*', function ($user) { /***/ });
 </pre>
                 <p>Uma vez que existe três rotas com parâmetros <strong>$user</strong>, <strong>when</strong>  irá verificar automaticamente pelo seu nome.</p>
 
@@ -424,19 +424,17 @@ $logRoutine = function() use ($myLogger, $r3) {
                 </p>
 <pre class="prettyprint">
 $r3->get('/about', function() {
-        return array('v' => 2.0);
-    })->acceptLanguage(array(
-        'en' => function($data) { return array("Version" => $data['v']); },
-        'pt' => function($data) { return array("Versão"  => $data['v']); }
-    ))->accept(array(
-
+    return array('v' => 2.0);
+})->acceptLanguage(array(
+    'en' => function($data) { return array("Version" => $data['v']); },
+    'pt' => function($data) { return array("Versão"  => $data['v']); }
+))->accept(array(
     'text/html' => function($data) {
-     list($k,$v)=each($data);
-
-     return "<strong>$k</strong>: $v";
-        },
-   'application/json' => 'json_encode'
-    ));
+        list($k,$v)=each($data);
+        return "<strong>$k</strong>: $v";
+    },
+    'application/json' => 'json_encode'
+));
 </pre>
             <p>
                 Como em cada rotina, rotinas conneg(Content Negotiation) são executadas na mesma ordem que você anexar nas rotas.
@@ -446,28 +444,25 @@ $r3->get('/about', function() {
 <pre class="prettyprint">
 $r3->get('/text/*', function($filename) {
     return fopen('data/'.$filename, 'r+');
-  })->acceptEncoding(array(
- 
- 'deflate' => function($stream) {
-
-  stream_filter_append($stream, 'zlib.deflate', STREAM_FILTER_READ);
-  
-  return $stream; /** now deflated on demand */
-}
+})->acceptEncoding(array( 
+    'deflate' => function($stream) {
+        stream_filter_append($stream, 'zlib.deflate', STREAM_FILTER_READ);  
+        return $stream; /** now deflated on demand */
+    }
 ));
 </pre>
-              <p>Ao aplicarmos rotinas conneg em várias rotas que podem retornar streams você(realmente) deve verificar se há <strong>is_resourcing()</strong> antes de fazer qualquer coisa.</p>
+              <p>Ao aplicarmos rotinas conneg em várias rotas que podem retornar streams você (realmente) deve verificar se há <strong>is_resourcing()</strong> antes de fazer qualquer coisa.</p>
 
               <h2 id="basic-auth">Basic HTTP Auth | HTTP Auth Básico</h2>
               <a href="#logo">Topo</a>
               <p>Suporte básico para autenticação HTTP já é implementado como rotina:</p>
 <pre class="prettyprint">
-    $r3->get('/home', 'HomeController')->authBasic('My Realm', function($user, $pass) {
-        return $user === 'admin' && $user === 'p4ss';
-    }); 
+$r3->get('/home', 'HomeController')->authBasic('My Realm', function($user, $pass) {
+    return $user === 'admin' && $user === 'p4ss';
+}); 
 </pre>
               <p>Você receberá um usuário e senha submetidos pelo usuário e você só precisar retornar <strong>true</strong> ou <strong>false</strong>. TRUE indica que o usuário pode ser autenticado.</p>
-              <p>Respect\Rest irá lidar com o fluxo de autenticação, enviando os cabeçalhos apropriados, quando não autenticado. Você também pode retornar outras rotas, que irá atuar como uma frente interna(consulte a seção foward above acima).</p>
+              <p>Respect\Rest irá lidar com o fluxo de autenticação, enviando os cabeçalhos apropriados, quando não autenticado. Você também pode retornar outras rotas, que irá atuar como uma frente interna (consulte a seção foward above acima).</p>
 
               <h2 id="filtering-browsers">Filtering Browsers | Filtrando Browsers</h2>
               <a href="#logo">Topo</a>
@@ -475,12 +470,12 @@ $r3->get('/text/*', function($filename) {
                   Abaixo está um exemplo desmonstrativo de como bloquear acesso de mobile devices:
               </p>
 <pre class="prettyprint">
-    $r3->get('/videos/*', 'VideosController')->userAgent(array(
-        'iphone|android' => function(){
-         header('HTTP/1.1 403 Forbidden');
-         return false; /** do not process the route. */
-        }
-    ));
+$r3->get('/videos/*', 'VideosController')->userAgent(array(
+    'iphone|android' => function(){
+        header('HTTP/1.1 403 Forbidden');
+        return false; /** do not process the route. */
+    }
+));
 </pre>
               <p>Você pode passar vários itens no array como nas rotinas conneg. As chaves do array é uma correspondência de expressão regular sem delimitadores.</p>
 
@@ -489,27 +484,27 @@ $r3->get('/text/*', function($filename) {
               <p>Observe que isso atualmente não é implementado.</p>
               <p>Por padrão os formulários HTML enviam dados via POST como <strong>multipart/form-data</strong>, mas clientes API podem enviar em outros formatos.Requisições PUT muitas vezes enviam outros tipos de MIME. Você pode pre-processar esses dados antes de fazer qualquer coisa:</p>
 <pre class="prettyprint">
-    $r3->post('/timeline', function() {
-        return file_get_contents('php://input');
-    })->contentType(array(
-        'multipart/form-data' => function($input) {
-            parse_str($input, $output);
-            return $output;
-        },
-        'application/json' => function($input) {
-            return my_json_converter($input);
-        },
-        'text/xml' => function($input) {
-            return my_xml_converter($input);
-        },
-    ));
+$r3->post('/timeline', function() {
+    return file_get_contents('php://input');
+})->contentType(array(
+    'multipart/form-data' => function($input) {
+        parse_str($input, $output);
+        return $output;
+    },
+    'application/json' => function($input) {
+        return my_json_converter($input);
+    },
+    'text/xml' => function($input) {
+        return my_xml_converter($input);
+    },
+));
 </pre>
               <h2 id="http-errors">HTTP Errors</h2>
               <a href="#logo">Topo</a>
               <p>Respect\Rest atualmente lida com os seguinte tipos de erros por padrão:</p>
               <ul>
                   <li>404, quando não existe nenhuma correspodência nos paths da rota.</li>
-                  <li>401, quando o cliente envia uma solicitação de não autenticado para uma rota usando a rotina<strong>authBasic</strong></li>
+                  <li>401, quando o cliente envia uma solicitação de não autenticado para uma rota usando a rotina <strong>authBasic</strong></li>
                   <li>405, quando um caminho correpondente for encontrado, mas o método não for especificado.</li>
                   <li>400, quando a validação <strong>when</strong> falhar.</li>
                   <li>406, quando o route path e o método batem mas o content-negotiation não.</li>
@@ -530,7 +525,7 @@ $r3->get('/text/*', function($filename) {
                 <a href="#logo">Topo</a>
                 <p>Rotinas são classes no namespace Respect\Rest\Routines. Mas você pode usar suas próprias rotinas usando a instância:</p>
 <pre class="prettyprint">
-    $r3->get('/greetings', 'Hello World')->appendRoutine(new MyRoutine);
+$r3->get('/greetings', 'Hello World')->appendRoutine(new MyRoutine);
 </pre>
                 <p>No exemplo acima, <strong>MyAbove</strong> é uma rotina de usuário fornecida e declarada em uma router. Rotinas personalizadas têm a opção de várias interface diferentes, que podem ser implementadas:</p>
                 <ul>
@@ -547,17 +542,17 @@ $r3->get('/text/*', function($filename) {
                 <a href="#logo">Topo</a>
                 <p>O Respect\Rest oferece duas maneiras de se tratar erros. A primeira é usando Exception Routes:</p>
 <pre class="prettyprint">
-    $r3->exceptionRoute('InvalidArgumentException', 
-          function (InvalidArgumentException $e) {
+$r3->exceptionRoute('InvalidArgumentException', 
+    function (InvalidArgumentException $e) {
         return 'Sorry, this error happened: '.$e->getMessage();
-    });
+});
 </pre>
               <p>
                 Sempre que uma exceção não capturada aparece em qualquer rota, será presa e encaminhada para outra rota ao lado. Da mesma forma, existe uma rota de erros PHP:</p>
 <pre class="prettyprint">
-    $r3->errorRoute(function (array $err) {
-        return 'Sorry, this errors happened: '.var_dump($err);
-    });
+$r3->errorRoute(function (array $err) {
+    return 'Sorry, this errors happened: '.var_dump($err);
+});
 </pre>
          <hr>
          <small>fim... <a href="#logo">Topo</a></small>
