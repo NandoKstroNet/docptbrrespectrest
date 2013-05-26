@@ -1,6 +1,6 @@
 Documentação PT-BR Respect/Rest
 ==================
-http://cssexperts.net/traducao-respect-rest/
+http://www.cssexperts.net/respect-rest-docs-br/
 
 Tradução da documentação do Respect/Rest PT-BR
 ===================
