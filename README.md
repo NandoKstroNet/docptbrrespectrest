@@ -409,7 +409,7 @@ Ao aplicarmos rotinas conneg em várias rotas que podem retornar streams você(r
 Suporte básico para autenticação HTTP já é implementado como rotina:
 ```php
     $r3->get('/home', 'HomeController')->authBasic('My Realm', function($user, $pass) {
-        return $user === 'admin' && $user === 'p4ss';
+        return $user === 'admin' && $pass === 'p4ss';
     }); 
 ```
 
