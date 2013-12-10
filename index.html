@@ -458,7 +458,7 @@ $r3->get('/text/*', function($filename) {
               <p>Suporte básico para autenticação HTTP já é implementado como rotina:</p>
 <pre class="prettyprint">
 $r3->get('/home', 'HomeController')->authBasic('My Realm', function($user, $pass) {
-    return $user === 'admin' && $user === 'p4ss';
+    return $user === 'admin' && $pass === 'p4ss';
 }); 
 </pre>
               <p>Você receberá um usuário e senha submetidos pelo usuário e você só precisar retornar <strong>true</strong> ou <strong>false</strong>. TRUE indica que o usuário pode ser autenticado.</p>
