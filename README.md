@@ -18,7 +18,7 @@ Controlador elegante para aplicações Restful e criação de APIs..
 Instalação
 ------------
 
-Packages podem ser encontrados no [PEAR](http://respect.li/pear) e [Composer](http://packagist.org/packages/Respect/Rest). Autoloading é compativél com [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md).
+Packages podem ser encontrados no [PEAR](http://respect.li/pear) e [Composer](http://packagist.org/packages/Respect/Rest). Autoloading é compatível com [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md).
 
 Feature Guide
 -------------
@@ -35,7 +35,7 @@ Bootstrap é bem simples, basta criar uma instância de Respect\Rest\Router.
     $r3 = new Router;
 ```
 
-Pressupomos que você tenha um .htaccess que redireciona para este arquivo PHP e que esteja executando-o a partir da raiz do dominio (http://example.com/ sem qualquer subpasta).
+Pressupomos que você tenha um .htaccess que redireciona para este arquivo PHP e que esteja executando-o a partir da raiz do domínio (http://example.com/ sem qualquer subpasta).
 
 Se você deseja utiliza-lo a partir de uma subpasta, basta passar a caminho para o router:
 ```php
@@ -54,7 +54,7 @@ The same goes for folders:
     $r3 = new Router('/myapp/index.php/');
 ```
 
-Isto presupões que as URLs no projeto iniciarão com esses namespaces.
+Isto pressupõe que as URLs no projeto iniciarão com esses namespaces.
 
 ### Dispatching
 [Top][]
@@ -64,7 +64,7 @@ O router é auto-executado, você não precisa realizar nenhuma ação para que 
     $r3->isAutoDispatched = false;
 ```
 
-Note que para ver as excessões é preciso seguir o próximo passo.
+Note que para ver as exceções é preciso seguir o próximo passo.
 
 You can then dispatch it yourself at the end of the proccess:
 ```php
@@ -110,7 +110,7 @@ Acessando http://localhost/users/alganet ou qualquer outro nome de usuário, al�
     });
 ```
 
-Os últimos parâmetros na rota são opcionais por default, basta declarar apenas um `->get('/posts/*'` que irá corresponder a `http://localhost/posts/` sem nenhum parâmetro. Você pode declarar um segundo `->get('/posts'`, agora o Router irá corresponder corretamente, ou tratar o parâmetro ausente, tornando-os anulavéis na função passada.
+Os últimos parâmetros na rota são opcionais por default, basta declarar apenas um `->get('/posts/*'` que irá corresponder a `http://localhost/posts/` sem nenhum parâmetro. Você pode declarar um segundo `->get('/posts'`, agora o Router irá corresponder corretamente, ou tratar o parâmetro ausente, tornando-os anuláveis na função passada.
 ```php
     $r3->get('/posts/*/*/*', function($year,$month=null,$day=null) {
         /** list posts, month and day are optional */
@@ -118,12 +118,12 @@ Os últimos parâmetros na rota são opcionais por default, basta declarar apena
 ```
 
  1. O código acima irá corresponder a /posts/2010/10/10, /posts/2011/01 e /posts/2010.
- 2. Os parametros opcionais são aceitos apenas ao fim do path. A seguinte forma não aceita parametro opcional: `/posts/*/*/*/comments/*`
+ 2. Os parâmetros opcionais são aceitos apenas ao fim do path. A seguinte forma não aceita parâmetro opcional: `/posts/*/*/*/comments/*`
 
 ### Catch-all Parameters
 [Top][]
 
-Existem casos em que você precisa pegar um número indefinido de parâmetros. Você pode usar o Route com o parametro catch-all, veja:
+Existem casos em que você precisa pegar um número indefinido de parâmetros. Você pode usar o Route com o parâmetro catch-all, veja:
 ```php
     $r3->get('/users/*/documents/**', function($user, $documentPath) {
         return readfile(PATH_STORAGE. implode('/', $documentPath));
@@ -133,8 +133,8 @@ Existem casos em que você precisa pegar um número indefinido de parâmetros. V
  1. O exemplo citado acima corresponde a `/users/alganet/documents/foo/bar/baz/anything`.
   Como retorno o parâmetro $user receberá alganet e $documentPath receberá um array com o 
   seguinte conteúdo [foo,bar,baz,anything].
- 2. Os parâmetros catch-all são definidos por dois astericos: `/**`.
- 3. Parametros catch-all devem aparecer apenas no fim do path. Os asteriscos duplos em outras posições serão sempre convertidos para asteriscos simples.
+ 2. Os parâmetros catch-all são definidos por dois asteriscos: `/**`.
+ 3. Parâmetros catch-all devem aparecer apenas no fim do path. Os asteriscos duplos em outras posições serão sempre convertidos para asteriscos simples.
  4. Catch-all parameters will match **after** any other route that matches
     the same pattern.
 
@@ -144,13 +144,13 @@ Existem casos em que você precisa pegar um número indefinido de parâmetros. V
 As coisas podem se tornar muito complexas rapidamente. Temos rotas simples, rota com parâmetros, parâmetros opcionais e parâmetros catch-all. Uma regra simples que se deve ter em mente é que o Respect/Rest coincide com as rotas a partir do mais especifico ao mais genérico.
 
   * Rotas com mais `/` são mais específicas e serão correspondidas primeiro.
-  * Rotas com parâmetros são menos espcificas que rotas sem parâmetros.
+  * Rotas com parâmetros são menos específicas que rotas sem parâmetros.
   * Rotas com muitos parâmetros são ainda mais menos especificas do que rotas com menos parâmetros.
   * Rotas com parâmetros catch-all são menos específicas e serão combinadas depois.
 
 Resumindo: A / e o * colocam sua rota no topo da lista de prioridades para combina-los. 
 
-Respect/Rest classifica rotas automáticamente, mas é altamente recomendado organizar rotas do mais específico para o mais genérico, isto visa melhorar o desempenho e manutenção do seu código.
+Respect/Rest classifica rotas automaticamente, mas é altamente recomendado organizar rotas do mais específico para o mais genérico, isto visa melhorar o desempenho e manutenção do seu código.
 
 ### Matching any HTTP Method
 [Top][]
@@ -168,7 +168,7 @@ Respect/Rest classifica rotas automáticamente, mas é altamente recomendado org
 ### Class Controllers
 [Top][]
 
-O método `any` é extremamente útil para vincular classes para os controladores, uma das caracteristicas mais importantes do Respect/Rest.:
+O método `any` é extremamente útil para vincular classes para os controladores, uma das características mais importantes do Respect/Rest.:
 ```php
     use Respect\Rest\Routable;
 
@@ -224,7 +224,7 @@ Em muitos casos você necessita de rotas para servir usuários de streams. O rot
 ```
 O exemplo acima irá redirecionar o arquivo diretamente para o navegador sem mantê-lo na memória.
 
-Atenção: Nós criamos uma vunerabilidade de segurança no exemplo: Passando um parâmetro diretamente para um handle fopen. Por favor valide todos os parâmetros de entrada do usuário antes de usá-los. Isto foi somente para uma demonstração!
+Atenção: Nós criamos uma vulnerabilidade de segurança no exemplo: Passando um parâmetro diretamente para um handle fopen. Por favor valide todos os parâmetros de entrada do usuário antes de usá-los. Isto foi somente para uma demonstração!
 ### Routing Static Values
 [Top][]
 
@@ -321,7 +321,7 @@ Similar ao `->by`, porém é executado após a rota fazer seu trabalho. No exemp
   2. Você é livre para usá-los em conjunto ou separados.
   3. `through` também pode receber parâmetros por nome.
 
-O exemplo acima permite que você faça alguma coisa com base nos parâmetros da rota, mas quando processado após a execução da rota, é desejavel para processar sua saida também. Isto pode ser conseguido com nested closure.
+O exemplo acima permite que você faça alguma coisa com base nos parâmetros da rota, mas quando processado após a execução da rota, é desejável para processar sua saída também. Isto pode ser conseguido com nested closure.
 ```php
     $r3->any('/settings', 'SetingsController')->through(function(){
         return function($data) {
@@ -332,12 +332,12 @@ O exemplo acima permite que você faça alguma coisa com base nos parâmetros da
         };
     });
 ```
-Ao usar as rotinas você é encorajado a separar a lógica do controlador dos componentes. Você pode reutizá-los
+Ao usar as rotinas você é encorajado a separar a lógica do controlador dos componentes. Você pode reutilizá-los
 
 ### Controller Splitting
 [Top][]
 
-Ao usar as rotinas você é encorajado a separar a lógica do controlador dos componentes. Você pode reutizá-los
+Ao usar as rotinas você é encorajado a separar a lógica do controlador dos componentes. Você pode reutilizá-los
 ```php
     $logRoutine = function() use ($myLogger, $r3) {
         $myLogger->logVisit($r3->request->path);
@@ -420,7 +420,7 @@ Respect\Rest irá lidar com o fluxo de autenticação, enviando os cabeçalhos a
 ### Filtering Browsers
 [Top][]
 
-Abaixo está um exemplo desmonstrativo de como bloquear acesso de mobile devices:
+Abaixo está um exemplo demonstrativo de como bloquear acesso de mobile devices:
 ```php
     $r3->get('/videos/*', 'VideosController')->userAgent(array(
         'iphone|android' => function(){
@@ -460,16 +460,16 @@ Por padrão os formulários HTML enviam dados via POST como `multipart/form-data
 
 Respect\Rest atualmente lida com os seguinte tipos de erros por padrão:
 
-  * 404, quando não existe nenhuma correspodência nos paths da rota.
+  * 404, quando não existe nenhuma correspondência nos paths da rota.
   * 401, quando o cliente envia uma solicitação de não autenticado para uma rota usando a rotinaauthBasic
-  * 405, quando um caminho correpondente for encontrado, mas o método não for especificado.
+  * 405, quando um caminho correspondente for encontrado, mas o método não for especificado.
   * 400, quando a validação when falhar.
   * 406, quando o route path e o método batem mas o content-negotiation não.
 
 ### RESTful Extras
 [Top][]
 
-  * Uma requisição HEAD trabalha automáticamente enviando os cabeçalhos de requisições GET sem corpo. Você pode substituir esse comportamento declarando rotas personalizadas  `head`.
+  * Uma requisição HEAD trabalha automaticamente enviando os cabeçalhos de requisições GET sem corpo. Você pode substituir esse comportamento declarando rotas personalizadas  `head`.
   * Uma requisição OPTIONS para `*` ou qualquer caminho de rota retorna o cabeçalho `Allow` correto.
   * Quando retorna 405, os cabeçalho Allow também estão definidos corretamente.
 
@@ -494,7 +494,7 @@ No exemplo acima, `MyRoutine` é uma rotina de usuário fornecida e declarada em
   * ProxyableBy - Instrui o router a executar o método `by()` antes da rota.
   * ProxyableThrough - Instrui o router a executar o método through() depois da rota.
   * ProxyableWhen - Instrui o router a executar o método when para validar a partida da rota.
-  * Unique - Faz a rotina ser substituida, não anexada, se mais de um é declarado para o mesmo tipo.
+  * Unique - Faz a rotina ser substituída, não anexada, se mais de um é declarado para o mesmo tipo.
   
 Você pode usar qualquer combinação acima mas terá de implementar a interface Routinable.
 
